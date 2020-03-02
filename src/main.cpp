@@ -1,8 +1,13 @@
-#include<iostream>
+#include <iostream>
+
+#include "menu.h"
+#include "song.h"
 
 using namespace std;
 
-int main(){
-    cout << "Hola Mundo";
+int main() {
+    List<Song,50> lista;
+    Menu menu;
+    menu.start(lista);
     return 0;
 }
