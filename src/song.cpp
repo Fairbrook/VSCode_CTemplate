@@ -98,4 +98,5 @@ Song& Song::operator=(const Song&s) {
     file = s.file;
     duration = s.duration;
     rankPos = s.rankPos;
+    return *this;
 }

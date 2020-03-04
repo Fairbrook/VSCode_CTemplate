@@ -24,21 +24,21 @@ void Menu::start(List<Song> &l) {
                 wait();
                 break;
             }
-        } catch(ListException &ex) {
+        } catch(List<Song>::Exception &ex) {
             cout << "Error de Lista: " << ex.what() << endl;
             wait();
-        } catch(...) {
-            cout << "Error inesperado";
+        } catch(exception &ex) {
+            cout << "Error inesperado "<< ex.what() << endl;
             wait();
         }
     } while(opt!='s');
 }
 
-void Menu::showMenu(List<Song> l) {
+void Menu::showMenu(const List<Song> &l) {
     cout << endl;
     cout << "== Actividad 3. Lista Estatica ==" << endl;
     cout << "Lista actual:"<<endl;
-    cout << l.toString() << endl;
+    formatList(l);
     cout << " * Menu *" << endl;
     cout << "[a] Insertar una nueva cancion" << endl
          << "[b] Borar una cancion" << endl
@@ -56,10 +56,12 @@ void Menu::addSong(List<Song> &l) {
     else pos = inputPos();
     Song song;
     int rankPos;
-
-    song.setName(inputCad("Introduzca el Nombre: "));
-    song.setSinger(inputCad("Introduzca el Cantante: "));
-    song.setAuthor(inputCad("Introduzca el Autor: "));
+    song.setTitle(inputCad("Introduzca el Nombre: "));
+    song.setArtist(inputName());
+    song.setAlbum(inputCad("Introduzca el Autor: "));
+    song.setDate(inputDate());
+    song.setFile(inputCad("Introduzca el nombre del archivo: "));
+    song.setDuration(inputDuration());
     cout << "Introduzca la posicion del ranking: ";
     cin >> rankPos;
     while(cin.get()!='\n');
@@ -95,6 +97,89 @@ string Menu::inputCad(const string& msn) {
     char aux[50];
     cout << msn;
     cin.getline(aux,50,'\n');
-    string name(aux);
+    return string (aux);
+}
+
+Name Menu::inputName(){
+    char aux[50];
+    Name name;
+    cout << "Ingrese el Nombre del Artista: ";
+    cin.getline(aux,50,'\n');
+    name.setFirst(aux);
+    cout << "Ingrese el Apellido del Artista: ";
+    cin.getline(aux,50,'\n');
+    name.setLast(aux);
     return name;
+}
+
+Date Menu::inputDate(){
+    char aux[50];
+    Date date;
+    int m,d,y;
+    cout << "Ingrese la fecha (dd/mm/yyyy): ";
+    cin.getline(aux,50,'\n');
+    try{
+        sscanf(aux,"%d/%d/%d",&m,&d,&y);
+        date.setDay(d);
+        date.setMonth(m);
+        date.setYear(y);
+    }catch(Date::Exception &ex){
+        cout << ("\nFormato de fecha incorrecto -> " + string(ex.what()))<<endl;
+        return inputDate();
+    }
+    return date;
+}
+
+Duration Menu::inputDuration(){
+    char aux[50];
+    Duration duration;
+    int h,m,s;
+    cout << "Ingrese la duracion (h:mm:ss): ";
+    cin.getline(aux,50,'\n');
+    try{
+        sscanf(aux,"%i:%i:%i",&h,&m,&s);
+        duration.setHours(h);
+        duration.setMinutes(m);
+        duration.setSeconds(s);
+    }catch(Duration::Exception &ex){
+        cout << ("\nFormato de duracion incorrecto -> " + string(ex.what()))<<endl;
+        return inputDuration();
+    }
+    return duration;
+}
+
+void Menu::formatList(const List<Song>&l){
+    Table table;
+    Song aux;
+    Row *row = new Row();
+    row->addCell("N");
+    row->addCell("TITULO");
+    row->addCell("ARTISTA");
+    row->addCell("ALBUM");
+    row->addCell("FECHA");
+    row->addCell("DURACION");
+    row->addCell("ARCHIVO");
+    row->addCell("RANK");
+    table.addRow(*row);
+    delete row;
+    if(!l.isEmpty()){
+        int i(l.getFirstPos());
+        do{
+            aux = l.retrieve(i);
+            row = new Row();
+            row->addCell(to_string(i));
+            row->addCell(aux.getTitle());
+            row->addCell(aux.getArtist().toString());
+            row->addCell(aux.getAlbum());
+            row->addCell(aux.getDate().toString());
+            row->addCell(aux.getDuration().toString());
+            row->addCell(aux.getFile());
+            row->addCell(to_string(aux.getRank()));
+            table.addRow(*row);
+            delete row;
+            i = l.getNextPos(i);
+        }while(i!=-1);
+    }
+    table.print();
+
 }

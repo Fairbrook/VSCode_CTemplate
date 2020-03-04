@@ -7,7 +7,7 @@ Date::Date(){
     tm *helper = gmtime(&aux);
     day = helper->tm_mday;
     month = helper->tm_mon+1;
-    year = helper->tm_year;
+    year = helper->tm_year+1900;
 }
 
 Date::Date(const Date&d):day(d.day),month(d.month),year(d.year){}
@@ -83,12 +83,10 @@ istream& operator>> (istream&is, Date&d){
 
     try{
         sscanf(helper,"%i/%i/%i",&d.day,&d.month,&d.year);
-        // d.day = stoi(helper.substr(0,2));
-        // d.month = stoi(helper.substr(3,2));
-        // d.year = stoi(helper.substr(6,4));
     }catch(exception &ex){
         throw Date::Exception("[Date] Error de formato de lectura");
     }
+    return is;
 }
 
 Date& Date::operator=(const Date &d) {

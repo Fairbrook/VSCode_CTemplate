@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-    List<Song,50> lista;
+    List<Song> lista;
     Menu menu;
     menu.start(lista);
     return 0;

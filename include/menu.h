@@ -6,19 +6,24 @@
 
 #include "list.h"
 #include "song.h"
+#include "table.h"
 
 class Menu {
 public:
-    void start(List<Song,50>&);
+    void start(List<Song>&);
 
-    void showMenu(List<Song,50>);
+    static void showMenu(const List<Song>&);
 
-    void addSong(List<Song,50>&);
-    void deleteSong(List<Song,50>&);
+    void addSong(List<Song>&);
+    void deleteSong(List<Song>&);
 
     static char inputOpt();
     static int inputPos();
     static std::string inputCad(const std::string&);
+    static Name inputName();
+    static Date inputDate();
+    static Duration inputDuration();
+    static void formatList(const List<Song>&);
 
     static void wait();
 };

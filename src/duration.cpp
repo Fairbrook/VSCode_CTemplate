@@ -90,6 +90,7 @@ istream& operator>> (istream&is, Duration&d){
     }catch(exception &ex){
         throw Duration::Exception("[Duration] Error de formato de lectura");
     }
+    return is;
 }
 
 Duration& Duration::operator=(const Duration &d) {
