@@ -10,7 +10,7 @@
 class Song {
 private:
     std::string title;
-    Name artist;
+    std::string artist;
     std::string album;
     Date date;
     std::string file;
@@ -22,7 +22,7 @@ public:
     Song(const Song&);
 
     std::string getTitle()const;
-    Name getArtist()const;
+    std::string getArtist()const;
     std::string getAlbum()const;
     Date getDate()const;
     std::string getFile()const;
@@ -32,7 +32,7 @@ public:
     std::string toString()const;
 
     void setTitle(const std::string&);
-    void setArtist(const Name&);
+    void setArtist(const std::string&);
     void setAlbum(const std::string&);
     void setDate(const Date&);
     void setFile(const std::string&);

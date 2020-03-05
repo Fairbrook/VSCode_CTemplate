@@ -24,6 +24,7 @@ public:
     static Date inputDate();
     static Duration inputDuration();
     static void formatList(const List<Song>&);
+    void search(const List<Song>&);
 
     static void wait();
 };

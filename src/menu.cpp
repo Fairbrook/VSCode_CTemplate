@@ -14,6 +14,9 @@ void Menu::start(List<Song> &l) {
                 addSong(l);
                 break;
             case 'b':
+                search(l);
+                break;
+            case 'c':
                 deleteSong(l);
                 break;
             case 's':
@@ -41,15 +44,73 @@ void Menu::showMenu(const List<Song> &l) {
     formatList(l);
     cout << " * Menu *" << endl;
     cout << "[a] Insertar una nueva cancion" << endl
-         << "[b] Buscar cancion" << endl
+         << "[b] Buscar cancion (lineal)" << endl
          << "[c] Borar una cancion" << endl
-         << "[c] Ordenar lista" << endl
          << "[s] Salir" << endl;
 }
 
 void Menu::wait() {
     cout << "Presione [Enter] para continuar";
     while(cin.get()!='\n');
+}
+
+
+void Menu::search(const List<Song> &l){
+    char opt,met;
+    int pos(-1);
+    Song aux;
+
+    cout << endl << endl
+         << "Buscar por: "<<endl
+         << "[a] Artista"<<endl
+         << "[b] Titulo" <<endl;
+    opt = inputOpt();
+
+    cout << endl
+         << "Metodo: "<<endl
+         << "[a] Lineal"<<endl
+         << "[b] Binario" <<endl;
+    met = inputOpt();
+    
+    if(opt=='a'){
+        aux.setArtist(inputCad("\nIntroduzca el artista:"));
+        if(met=='a')
+            pos = l.linearSearch(
+                    aux,
+                    [](const Song &a,const Song &b)->int{
+                        return a.getArtist().compare(b.getArtist());
+                    });
+        else if(met=='b')
+            pos = l.binarySearch(
+                        aux,
+                        [](const Song &a,const Song &b)->int{
+                            return a.getArtist().compare(b.getArtist());
+                    });
+
+    }else if(opt=='b'){
+        aux.setTitle(inputCad("\nIntroduzca el titulo:"));
+        if(met=='a')
+            pos = l.linearSearch(
+                    aux,
+                    [](const Song &a,const Song &b)->int{
+                        return a.getTitle().compare(b.getArtist());
+                    });
+        else if(met=='b')
+            pos = l.binarySearch(
+                        aux,
+                        [](const Song &a,const Song &b)->int{
+                            return a.getTitle().compare(b.getArtist());
+                    });
+    }
+
+    if(pos==-1){
+        cout << "Elemento no encontrado";
+        return;
+    }
+
+    aux = l.retrieve(pos);
+    cout << "Elemento Encontrado: \n";
+    cout << aux.toString();
 }
 
 void Menu::addSong(List<Song> &l) {
@@ -59,7 +120,7 @@ void Menu::addSong(List<Song> &l) {
     Song song;
     int rankPos;
     song.setTitle(inputCad("Introduzca el Nombre: "));
-    song.setArtist(inputName());
+    song.setArtist(inputCad("Introduzca el Nombre del artista: "));
     song.setAlbum(inputCad("Introduzca el Autor: "));
     song.setDate(inputDate());
     song.setFile(inputCad("Introduzca el nombre del archivo: "));
@@ -100,18 +161,6 @@ string Menu::inputCad(const string& msn) {
     cout << msn;
     cin.getline(aux,50,'\n');
     return string (aux);
-}
-
-Name Menu::inputName(){
-    char aux[50];
-    Name name;
-    cout << "Ingrese el Nombre del Artista: ";
-    cin.getline(aux,50,'\n');
-    name.setFirst(aux);
-    cout << "Ingrese el Apellido del Artista: ";
-    cin.getline(aux,50,'\n');
-    name.setLast(aux);
-    return name;
 }
 
 Date Menu::inputDate(){
@@ -171,7 +220,7 @@ void Menu::formatList(const List<Song>&l){
             row = new Row();
             row->addCell(to_string(i));
             row->addCell(aux.getTitle());
-            row->addCell(aux.getArtist().toString());
+            row->addCell(aux.getArtist());
             row->addCell(aux.getAlbum());
             row->addCell(aux.getDate().toString());
             row->addCell(aux.getDuration().toString());

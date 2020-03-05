@@ -14,7 +14,7 @@ Song::Song(const Song&s):
     rankPos(s.rankPos) {}
 
 string Song::getTitle()const{return title;}
-Name Song::getArtist()const{return artist;}
+string Song::getArtist()const{return artist;}
 string Song::getAlbum()const{return album;}
 Date Song::getDate()const{return date;}
 string Song::getFile()const{return file;}
@@ -25,7 +25,7 @@ string Song::toString() const{
     string result;
     result+=title;
     result+=" | ";
-    result+=artist.toString();
+    result+=artist;
     result+=" | ";
     result+=album;
     result+=" | ";
@@ -40,7 +40,7 @@ string Song::toString() const{
 }
 
 void Song::setTitle(const string&t){title = t;}
-void Song::setArtist(const Name&n){artist = n;}
+void Song::setArtist(const string&n){artist = n;}
 void Song::setAlbum(const std::string&a){album = a;}
 void Song::setDate(const Date&d){date = d;}
 void Song::setFile(const std::string&f){file = f;}
@@ -69,7 +69,7 @@ bool Song::operator>(const Song&s)const{
 
 ostream& operator<<(ostream&os,const Song&s){
     os << s.title << endl
-        << s.artist.toString() << endl
+        << s.artist << endl
         << s.album << endl
         << s.date.toString() << endl
         << s.file << endl
@@ -80,7 +80,7 @@ ostream& operator<<(ostream&os,const Song&s){
 
 istream& operator>>(istream &is,Song&s){
     getline(is,s.title);
-    is >> s.artist;
+    getline(is,s.artist);
     getline(is,s.album);
     is >> s.date;
     getline(is,s.file);

@@ -48,7 +48,7 @@ int Date::getYear() const{
 }
 
 string Date::toString()const{
-    char aux[10];
+    char aux[12];
     sprintf(aux,"%02i/%02i/%04i",day,month,year);
     return string(aux);
 }
