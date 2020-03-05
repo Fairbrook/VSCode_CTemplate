@@ -41,7 +41,9 @@ void Menu::showMenu(const List<Song> &l) {
     formatList(l);
     cout << " * Menu *" << endl;
     cout << "[a] Insertar una nueva cancion" << endl
-         << "[b] Borar una cancion" << endl
+         << "[b] Buscar cancion" << endl
+         << "[c] Borar una cancion" << endl
+         << "[c] Ordenar lista" << endl
          << "[s] Salir" << endl;
 }
 

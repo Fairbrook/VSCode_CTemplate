@@ -31,7 +31,7 @@ public:
     };
 
     List();
-    List(const List&);
+    List(const List<T,ASIZE>&);
     bool isEmpty()const;
     bool isFull()const;
 
@@ -54,13 +54,15 @@ public:
 
     void sort();
     void sort(bool (*)(const T&,const T&));
+
+    List<T,ASIZE>& operator=(const List&);
 };
 
 template <class T, int ASIZE>
 List<T,ASIZE>::List():counter(-1),isSorted(false) {}
 
 template <class T, int ASIZE>
-List<T,ASIZE>::List(const List &l) {
+List<T,ASIZE>::List(const List<T,ASIZE> &l) {
     for(int i = 0; i < ASIZE ; i++)
         data[i] = l.data[i];
     counter = l.counter;
@@ -240,5 +242,12 @@ void List<T,ASIZE>::sort(bool (*validate)(const T&,const T&)){
     }while(flag);
 }
 
+template <class T, int ASIZE>
+List<T,ASIZE>& List<T,ASIZE>::operator=(const List&l){
+    for(int i = 0; i < ASIZE ; i++)
+        data[i] = l.data[i];
+    counter = l.counter;
+    isSorted = l.isSorted;
+}
 
 #endif // LIST_H_INCLUDED
