@@ -16,9 +16,9 @@
             "externalConsole": true,
             "MIMode": "gdb",
             //Linux
-            //"miDebuggerPath": "gdb",
+            "miDebuggerPath": "gdb",
             //Windows
-            "miDebuggerPath": "gdb.exe",
+            // "miDebuggerPath": "gdb.exe",
             "setupCommands": [
                 {
                     "description": "Habilitar la impresión con sangría para gdb",

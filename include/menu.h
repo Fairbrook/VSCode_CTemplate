@@ -9,13 +9,11 @@
 #include "table.h"
 
 class Menu {
-public:
-    void start(List<Song>&);
-
+private:
     static void showMenu(const List<Song>&);
 
-    void addSong(List<Song>&);
-    void deleteSong(List<Song>&);
+    static void addSong(List<Song>&);
+    static void deleteSong(List<Song>&);
 
     static char inputOpt();
     static int inputPos();
@@ -24,9 +22,16 @@ public:
     static Date inputDate();
     static Duration inputDuration();
     static void formatList(const List<Song>&);
-    void search(const List<Song>&);
+    static void search(const List<Song>&);
 
     static void wait();
+
+    static void sortList(List<Song>&);
+
+public:
+    static void start(List<Song>&);
+
+
 };
 
 #endif // MENU_H_INCLUDED

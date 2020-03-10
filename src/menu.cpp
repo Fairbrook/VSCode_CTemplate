@@ -17,6 +17,9 @@ void Menu::start(List<Song> &l) {
                 search(l);
                 break;
             case 'c':
+                sortList(l);
+                break;
+            case 'd':
                 deleteSong(l);
                 break;
             case 's':
@@ -45,7 +48,8 @@ void Menu::showMenu(const List<Song> &l) {
     cout << " * Menu *" << endl;
     cout << "[a] Insertar una nueva cancion" << endl
          << "[b] Buscar cancion" << endl
-         << "[c] Borar una cancion" << endl
+         << "[c] Ordenar" << endl
+         << "[d] Borar una cancion" << endl
          << "[s] Salir" << endl;
 }
 
@@ -53,15 +57,6 @@ void Menu::wait() {
     cout << "Presione [Enter] para continuar";
     while(cin.get()!='\n');
 }
-
-// inline int title(const Song&a, const Song&b){
-//     return a.getTitle().compare(b.getTitle());
-// }
-
-// inline int artist(const Song&a, const Song&b){ 
-//     return a.getArtist().compare(b.getArtist());
-// }
-
 
 void Menu::search(const List<Song> &l){
     char opt,met;
@@ -74,7 +69,7 @@ void Menu::search(const List<Song> &l){
         return a.getTitle().compare(b.getTitle());
     };
 
-    cout << endl << endl
+    cout << endl
          << "Buscar por: "<<endl
          << "[a] Artista"<<endl
          << "[b] Titulo" <<endl;
@@ -228,4 +223,51 @@ void Menu::formatList(const List<Song>&l){
     }
     table.print();
 
+}
+
+void Menu::sortList(List<Song>&l){
+    int opt,met;
+    int (*artist)(const Song&, const Song&) = [](const Song&a, const Song&b)->int{
+        return a.getArtist().compare(b.getArtist());
+    };
+    int (*title)(const Song&, const Song&) = [](const Song&a, const Song&b)->int{
+        return a.getTitle().compare(b.getTitle());
+    };
+
+    cout << endl
+         << "Ordenar por: "<<endl
+         << "[a] Artista"<<endl
+         << "[b] Titulo" <<endl;
+    opt = inputOpt();
+    if(opt!='a' and opt!='b'){
+        cout << "Opcion invalida";
+        return;
+    }
+
+    cout << endl
+         << "Metodo: "<<endl
+         << "[a] Burbuja"<<endl
+         << "[b] Insercion" <<endl
+         << "[c] Seleccion" <<endl
+         << "[d] Shell" <<endl;
+
+    switch(inputOpt()){
+        case 'a':
+            l.bubbleSort((opt=='a')?artist:title);
+            break;
+        case 'b':
+            l.insertSort((opt=='a')?artist:title);
+            break;
+        case 'c':
+            l.selectSort((opt=='a')?artist:title);
+            break;
+        case 'd':
+            l.bubbleSort((opt=='a')?artist:title);
+            break;
+        default:
+            cout << "Opcion invalida";
+            return;
+    }
+    cout << "Lista Ordenada Exitosamente\n";
+    wait();
 }

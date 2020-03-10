@@ -7,7 +7,6 @@ using namespace std;
 
 int main() {
     List<Song> lista;
-    Menu menu;
-    menu.start(lista);
+    Menu::start(lista);
     return 0;
 }
