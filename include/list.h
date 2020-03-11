@@ -240,6 +240,27 @@ void List<T,ASIZE>::insertSort(int (*compare)(const T&,const T&)){
     }
 }
 
+template <class T, int ASIZE>
+void List<T,ASIZE>::shellSort(int (*compare)(const T&,const T&)){
+    int i(1),dif(counter/2),j;
+    while(dif > 0){
+        i = 0;
+        while(i<=(counter - dif)){
+            if(compare(data[i],data[i+dif])>0){
+                swapData(data[i],data[i+dif]);
+                j = i;
+                while(j>=dif){
+                    if(compare(data[j],data[j-dif])>0)break;
+                    swapData(data[j],data[j-dif]);
+                    j-=dif;
+                }
+            }
+            i++;
+        }
+        dif/=2;
+    }
+}
+
 
 template <class T, int ASIZE>
 List<T,ASIZE>& List<T,ASIZE>::operator=(const List&l){

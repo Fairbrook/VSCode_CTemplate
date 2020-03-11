@@ -262,7 +262,7 @@ void Menu::sortList(List<Song>&l){
             l.selectSort((opt=='a')?artist:title);
             break;
         case 'd':
-            l.bubbleSort((opt=='a')?artist:title);
+            l.shellSort((opt=='a')?artist:title);
             break;
         default:
             cout << "Opcion invalida";
